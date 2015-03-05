@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="RotaDBModelStoreContainer" CdmEntityContainer="RotaDBEntities">
+    <EntitySetMapping Name="Project">
+      <EntityTypeMapping TypeName="RotaDBModel.Project">
+        <MappingFragment StoreEntitySet="Project">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="AnalyseStartDate" ColumnName="AnalyseStartDate" />
+          <ScalarProperty Name="DevelopmentStartDate" ColumnName="DevelopmentStartDate" />
+          <ScalarProperty Name="TestStartDate" ColumnName="TestStartDate" />
+          <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,94 @@
+﻿@model Rota.Models.Project
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.gunluk').parent().parent().find('.active').removeClass('active');
+        $('.gunluk').parent().parent().find('.gunluk').addClass('active');
+
+        $("#report tr:not(.odd)").hide();
+        $("#report tr:first-child").show();
+
+        $("#report tbody > tr.odd").click(function () {
+            if ($(this).nextUntil(".odd", "tr").length < 1) {
+                GetProjectDetailWithAjax($(this).attr("id"));
+            }
+            $(this).nextUntil(".odd", "tr").toggle();
+            $(this).find(".arrow").toggleClass("up");
+        });
+
+
+    });
+
+
+    function InsertDataToRow(data, $newRow) {
+        var $analyseColumn = $newRow.find('td[class="aDate"]');
+        $analyseColumn.text(GetClearDate(data.AnalyseStartDate));
+
+        var $testColumn = $newRow.find('td[class="tDate"]');
+        $testColumn.text(GetClearDate(data.TestStartDate));
+
+        var $developmentColumn = $newRow.find('td[class="dDate"]');
+        $developmentColumn.text(GetClearDate(data.DevelopmentStartDate));
+
+        var $productionColumn = $newRow.find('td[class="pDate"]');
+        $productionColumn.text(GetClearDate(data.ProductionDate));
+
+        var $expandColumn = $newRow.find('td[class="uDate"]');
+        $expandColumn.empty();
+
+    }; 
+
+
+
+    function CompareDates(date1, date2) {
+        var s1 = date1.split(".");
+        var s2 = date2.split(".");
+
+        var d1 = new Date(s1[2], s1[1], s1[0]);
+        var d2 = new Date(s2[2], s2[1], s2[0]);
+
+        if (d1.getDate() < d2.getDate())
+            return "first";
+        else if (d1.getDate() > d2.getDate())
+            return "second";
+        return "equals";
+
+    };
+
+</script>
+
+<table class="footable no-more-tables" id="report">
+    <thead>
+        <tr class="odd">
+            <th style="width: 30%;">Proje Adı</th>
+            <th>Analiz Başlangıç Tarihi</th>
+            <th>Geliştirme Başlangıç Tarihi</th>
+            <th>Test Başlangıç Tarihi</th>
+            <th>Canlıya Geçiş Tarihi</th>
+            <th style="width: 4%;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Rota.Models.Project item in ViewBag.ProjectList)
+        {
+            <tr class="odd" id="@item.ProjectId">
+                <td data-title="Proje Adı" class="pName">@item.ProjectName</td>
+                <td data-title="Analiz Tarihi" class="aDate">@item.AnalyseStartDate.ToShortDateString()</td>
+                <td data-title="Geliştirme Tarihi" class="dDate">@item.DevelopmentStartDate.ToShortDateString()</td>
+                <td data-title="Test Tarihi" class="tDate">@item.TestStartDate.ToShortDateString()</td>
+                <td data-title="Canlı Tarihi" class="pDate">@item.ProductionDate.ToShortDateString()</td>
+                <td class="uDate">
+                    <div class="arrow">
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

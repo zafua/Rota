@@ -1,0 +1,209 @@
+﻿@model Rota.Models.Project
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.gunluk').parent().parent().find('.active').removeClass('active');
+        $('.gunluk').parent().parent().find('.gunluk').addClass('active');
+
+        $("#report tr:not(.odd)").hide();
+        $("#report tr:first-child").show();
+
+        $("#report tr.odd").click(function () {
+            if ($(this).nextUntil(".odd", "tr").length < 1) {
+                GetProjectDetailWithAjax($(this).attr("id"));
+            }
+            $(this).nextUntil(".odd", "tr").toggle();
+            //$(this).next("tr").toggle();
+            $(this).find(".arrow").toggleClass("up");
+        });
+
+
+        //$("#report").jExpand();
+    });
+
+    function GetProjectDetailWithAjax(id) {
+        $.ajax({
+            type: 'GET',
+            url: '/Rota/GetProjectData/' + id,
+            success: function (data) {
+                HandleData(data);
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown, url);
+            }
+        });
+    };
+
+    function CompareRowWithNext($currentRow) {
+        var $nextRow = $currentRow.next();
+    };
+
+    function HandleData(data) {
+        var result = JSON.parse(data.projectlist);
+        var $parentTR;
+        jQuery.each(result, function (index) {
+            $parentTR = $("#" + result[index].ProjectId).closest('tr');
+            var $nextRow = $parentTR.closest('tr').next();
+            var $compareRow = null;
+            if ($nextRow.attr('class') == "no")
+                $compareRow = $nextRow;
+            var firstDate, secondDate;
+            var $newRow = $parentTR.clone();
+            $newRow.removeClass("odd").removeAttr("id").addClass("no");
+            console.log(result[index].UpdateDate);
+
+            var $analyseColumn = $newRow.find('td[class="aDate"]');
+            $analyseColumn.text(GetClearDate(result[index].AnalyseStartDate));
+
+            var $testColumn = $newRow.find('td[class="tDate"]');
+            $testColumn.text(GetClearDate(result[index].TestStartDate));
+
+            var $developmentColumn = $newRow.find('td[class="dDate"]');
+            $developmentColumn.text(GetClearDate(result[index].DevelopmentStartDate));
+
+            var $productionColumn = $newRow.find('td[class="pDate"]');
+            $productionColumn.text(GetClearDate(result[index].ProductionDate));
+
+            var $expandColumn = $newRow.find('td[class="uDate"]');
+            $expandColumn.empty();
+
+            var $nameColumn = $newRow.find('td[class="pName"]');
+            $nameColumn.empty();
+
+            if ($compareRow != null) {
+                firstDate = GetClearDate(result[index].AnalyseStartDate);
+                secondDate = $compareRow.children('td.aDate').text();
+                if (CompareDates(firstDate, secondDate) == "first")
+                    $analyseColumn.addClass("green");
+                if (CompareDates(firstDate, secondDate) == "second")
+                    $analyseColumn.addClass("red");
+
+                firstDate = GetClearDate(result[index].TestStartDate);
+                secondDate = $compareRow.children('td.tDate').text();
+                if (CompareDates(firstDate, secondDate) == "first")
+                    $testColumn.addClass("green");
+                if (CompareDates(firstDate, secondDate) == "second")
+                    $testColumn.addClass("red");
+
+                firstDate = GetClearDate(result[index].DevelopmentStartDate);
+                secondDate = $compareRow.children('td.dDate').text();
+                if (CompareDates(firstDate, secondDate) == "first")
+                    $developmentColumn.addClass("green");
+                if (CompareDates(firstDate, secondDate) == "second")
+                    $developmentColumn.addClass("red");
+
+                firstDate = GetClearDate(result[index].ProductionDate);
+                secondDate = $compareRow.children('td.pDate').text();
+                if (CompareDates(firstDate, secondDate) == "first")
+                    $productionColumn.addClass("green");
+                if (CompareDates(firstDate, secondDate) == "second")
+                    $productionColumn.addClass("red");
+            }
+
+            $newRow.insertAfter($parentTR);
+        });
+
+        var $nextRow = $parentTR.closest('tr').next();
+        var $compareRow = null;
+        if ($nextRow.attr('class') == "no")
+            $compareRow = $nextRow;
+        var firstDate, secondDate;
+
+        if ($compareRow != null) {
+            firstDate = $parentTR.children('td.aDate').text();
+            secondDate = $compareRow.children('td.aDate').text();
+            var $analyseColumn = $parentTR.find('td[class="aDate"]')
+            if (CompareDates(firstDate, secondDate) == "first")
+                $analyseColumn.addClass("green");
+            if (CompareDates(firstDate, secondDate) == "second")
+                $analyseColumn.addClass("red");
+
+            firstDate = $parentTR.children('td.tDate').text();
+            secondDate = $compareRow.children('td.tDate').text();
+            var $testColumn = $parentTR.find('td[class="tDate"]')
+            if (CompareDates(firstDate, secondDate) == "first")
+                $testColumn.addClass("green");
+            if (CompareDates(firstDate, secondDate) == "second")
+                $testColumn.addClass("red");
+
+            firstDate = $parentTR.children('td.dDate').text();
+            secondDate = $compareRow.children('td.dDate').text();
+            var $developmentColumn = $parentTR.find('td[class="dDate"]')
+            if (CompareDates(firstDate, secondDate) == "first")
+                $developmentColumn.addClass("green");
+            if (CompareDates(firstDate, secondDate) == "second")
+                $developmentColumn.addClass("red");
+
+            firstDate = $parentTR.children('td.pDate').text();
+            secondDate = $compareRow.children('td.pDate').text();
+            var $productionColumn = $parentTR.find('td[class="pDate"]')
+            if (CompareDates(firstDate, secondDate) == "first")
+                $productionColumn.addClass("green");
+            if (CompareDates(firstDate, secondDate) == "second")
+                $productionColumn.addClass("red");
+        }
+    };
+
+    function CompareDates(date1, date2) {
+        var s1 = date1.split(".");
+        var s2 = date2.split(".");
+
+        var d1 = new Date(s1[2], s1[1], s1[0]);
+        var d2 = new Date(s2[2], s2[1], s2[0]);
+
+        if (d1.getDate() < d2.getDate())
+            return "first";
+        else if (d1.getDate() > d2.getDate())
+            return "second";
+        return "equals";
+
+    };
+
+    function GetClearDate(date) {
+        var subDate = date.split("T")[0];
+        var splits = subDate.split("-");
+
+        for (var i = 0; i < splits.length; i++) {
+            if (splits[i].indexOf("0") == 0)
+                splits[i] = splits[i].substring(1, 2);
+        }
+        return splits[2] + "." + splits[1] + "." + splits[0];
+    };
+</script>
+
+<table class="footable no-more-tables" id="report">
+    <thead>
+        <tr class="odd">
+            <th>Proje Adı</th>
+            <th>Analiz Başlangıç Tarihi</th>
+            <th>Geliştirme Başlangıç Tarihi</th>
+            <th>Test Başlangıç Tarihi</th>
+            <th>Canlıya Geçiş Tarihi</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Rota.Models.Project item in ViewBag.ProjectList)
+        {
+            <tr class="odd" id="@item.ProjectId">
+                <td data-title="Proje Adı<" class="pName">@item.ProjectName</td>
+                <td data-title="Analiz Başlangıç Tarihi" class="aDate">@item.AnalyseStartDate.ToShortDateString()</td>
+                <td data-title="Geliştirme Başlangıç Tarihi" class="dDate">@item.DevelopmentStartDate.ToShortDateString()</td>
+                <td data-title="Test Başlangıç Tarihi" class="tDate">@item.TestStartDate.ToShortDateString()</td>
+                <td data-title="Canlıya Geçiş Tarihi" class="pDate">@item.ProductionDate.ToShortDateString()</td>
+                <td class="uDate">
+                    <div class="arrow">
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

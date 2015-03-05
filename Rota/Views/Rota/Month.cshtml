@@ -1,0 +1,98 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('.aylik').parent().parent().find('.active').removeClass('active');
+        $('.aylik').parent().parent().find('.aylik').addClass('active');
+
+        $("#report tr:not(.odd)").hide();
+        $("#report tr:first-child").show();
+
+        $("#report tbody > tr.odd").click(function () {
+            if ($(this).nextUntil(".odd", "tr").length < 1) {
+                GetProjectDetailWithAjax($(this).attr("id"));
+            }
+            $(this).nextUntil(".odd", "tr").toggle();
+            $(this).find(".arrow").toggleClass("up");
+        });
+
+        $('#report > tbody  > tr > td').each(function () {
+            var $td = $(this);
+            if ($td.attr('class').indexOf("Date") > 0) {
+                $td.text(ChangeDateToMonth($td.text()));
+            }
+        });
+
+    });
+
+    function InsertDataToRow(data, $newRow) {
+        var $analyseColumn = $newRow.find('td[class="aDate"]');
+        $analyseColumn.text(ChangeDateToMonth(GetClearDate(data.AnalyseStartDate)));
+
+        var $testColumn = $newRow.find('td[class="tDate"]');
+        $testColumn.text(ChangeDateToMonth(GetClearDate(data.TestStartDate)));
+
+        var $developmentColumn = $newRow.find('td[class="dDate"]');
+        $developmentColumn.text(ChangeDateToMonth(GetClearDate(data.DevelopmentStartDate)));
+
+        var $productionColumn = $newRow.find('td[class="pDate"]');
+        $productionColumn.text(ChangeDateToMonth(GetClearDate(data.ProductionDate)));
+
+        var $expandColumn = $newRow.find('td[class="uDat"]');
+        $expandColumn.empty();
+    };
+
+    function CompareDates(date1, date2) {
+        var s1 = date1.split(" ");
+        var s2 = date2.split(" ");
+        if (s1[1] < s2[1])
+            return "first";
+        else if (s1[1] > s2[1])
+            return "second";
+        else {
+            var month1 = searchStringInMonths(s1[0]);
+            var month2 = searchStringInMonths(s2[0]);
+
+            if (month1 < month2)
+                return "first";
+            else if (month1 > month2)
+                return "second";
+            else
+                return "equals";
+        }
+    };
+
+</script>
+<table class="footable no-more-tables" id="report">
+    <thead>
+        <tr class="odd">
+            <th style="width: 30%;">Proje Adı</th>
+            <th>Analiz Başlangıç Tarihi</th>
+            <th>Geliştirme Başlangıç Tarihi</th>
+            <th>Test Başlangıç Tarihi</th>
+            <th>Canlıya Geçiş Tarihi</th>
+            <th style="width: 4%;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Rota.Models.Project item in Model)
+        {
+            <tr class="odd" id="@item.ProjectId">
+                <td data-title="Proje Adı" class="pName">@item.ProjectName</td>
+                <td data-title="Analiz Tarihi" class="aDate">@item.AnalyseStartDate.ToShortDateString()</td>
+                <td data-title="Geliştirme Tarihi" class="dDate">@item.DevelopmentStartDate.ToShortDateString()</td>
+                <td data-title="Test Tarihi" class="tDate">@item.TestStartDate.ToShortDateString()</td>
+                <td data-title="Canlı Tarihi" class="pDate">@item.ProductionDate.ToShortDateString()</td>
+                <td class="uDat">
+                    <div class="arrow">
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+

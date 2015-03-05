@@ -1,0 +1,232 @@
+﻿body {
+    font-size: .85em;
+    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    color: #232323;
+    background-color: #fff;
+}
+
+header, footer, nav, section {
+    display: block;
+}
+
+
+
+
+
+.footable > thead > tr > th {
+    position: relative;
+}
+
+.footable > thead > tr > td {
+    position: relative;
+}
+
+.footable {
+    border-radius: 6px;
+    border: 1px solid rgb(204, 204, 204);
+    border-image: none;
+    width: 100%;
+    color: rgb(68, 68, 68);
+    font-family: "trebuchet MS", "Lucida sans", Arial;
+    font-size: 14px;
+    border-spacing: 0;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    table-layout: fixed;
+}
+
+.odd:hover {
+    background: rgb(241, 248, 233);
+}
+
+.no:hover{
+    
+    background: rgb(251, 248, 233);
+}
+
+.footable > tbody > tr > td {
+    padding: 10px;
+    text-align: left;
+    border-top-color: rgb(204, 204, 204);
+    border-left-color: rgb(204, 204, 204);
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-top-style: solid;
+    border-left-style: solid;
+}
+
+.footable > thead > tr > th {
+    padding: 10px;
+    text-align: left;
+    border-top-color: rgb(204, 204, 204);
+    border-left-color: rgb(204, 204, 204);
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-top-style: solid;
+    border-left-style: solid;
+    font-size:larger;
+}
+
+.footable > thead > tr > th {
+    border-top-color: currentColor;
+    border-top-width: medium;
+    border-top-style: none;
+    box-shadow: inset 0px 1px 0px rgba(255,255,255,0.8);
+    text-shadow: 0px 1px 0px rgba(255,255,255,0.5);
+    background-image: linear-gradient(rgb(235, 243, 252), rgb(202, 233, 249));
+    background-color: rgb(220, 233, 249);
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset;
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset;
+}
+
+.footable > thead > tr > td {
+    border-top-color: currentColor;
+    border-top-width: medium;
+    border-top-style: none;
+    box-shadow: inset 0px 1px 0px rgba(255,255,255,0.8);
+    text-shadow: 0px 1px 0px rgba(255,255,255,0.5);
+    background-image: linear-gradient(rgb(235, 243, 252), rgb(220, 233, 249));
+    background-color: rgb(220, 233, 249);
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset;
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset;
+}
+
+.footable > thead > tr > th:first-child {
+    border-radius: 6px 0px 0px;
+    -moz-border-radius: 6px 0 0 0;
+    -webkit-border-radius: 6px 0 0 0;
+}
+
+.footable > thead > tr > td:first-child {
+    border-radius: 6px 0px 0px;
+    -moz-border-radius: 6px 0 0 0;
+    -webkit-border-radius: 6px 0 0 0;
+}
+
+.footable > thead > tr > th:last-child {
+    border-radius: 0px 6px 0px 0px;
+    -moz-border-radius: 0 6px 0 0;
+    -webkit-border-radius: 0 6px 0 0;
+}
+
+.footable > thead > tr > td:last-child {
+    border-radius: 0px 6px 0px 0px;
+    -moz-border-radius: 0 6px 0 0;
+    -webkit-border-radius: 0 6px 0 0;
+}
+
+.footable > thead > tr > th:only-child {
+    border-radius: 6px 6px 0px 0px;
+    -moz-border-radius: 6px 6px 0 0;
+    -webkit-border-radius: 6px 6px 0 0;
+}
+
+.footable > thead > tr > td:only-child {
+    border-radius: 6px 6px 0px 0px;
+    -moz-border-radius: 6px 6px 0 0;
+    -webkit-border-radius: 6px 6px 0 0;
+}
+
+.footable > tbody > tr:last-child > td:first-child {
+    border-radius: 0px 0px 0px 6px;
+    -moz-border-radius: 0 0 0 6px;
+    -webkit-border-radius: 0 0 0 6px;
+}
+
+.footable > tbody > tr:last-child > td:last-child {
+    border-radius: 0px 0px 6px;
+    -moz-border-radius: 0 0 6px 0;
+    -webkit-border-radius: 0 0 6px 0;
+}
+
+.footable > tbody img {
+    vertical-align: middle;
+}
+
+#report div.arrow {
+    background: transparent url(../Images/arrows.png) no-repeat scroll 0px -16px;
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+.odd
+{
+    /*background-color:#EEEDF2;*/
+    background-image: linear-gradient(rgb(235, 243, 252), rgb(220, 233, 249));
+}
+
+
+
+#report div.up {
+    background-position: 0px 0px;
+}
+
+.green{
+    background-color:#dff0d8;
+    color:#3c763d;
+}
+
+.red{
+    color:red;
+}
+
+.pName{
+    font-weight:bolder;
+    background-image: linear-gradient(rgb(235, 243, 252), rgb(220, 233, 249));
+}
+
+.uDat td th{
+    width: 5%;
+}
+
+
+@media only screen and (max-width: 800px) {
+	
+	/* Force table to not be like tables anymore */
+	.no-more-tables table, 
+	.no-more-tables thead, 
+	.no-more-tables tbody, 
+	.no-more-tables th, 
+	.no-more-tables td, 
+	.no-more-tables tr { 
+		display: block; 
+	}
+ 
+	/* Hide table headers (but not display: none;, for accessibility) */
+	.no-more-tables thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+ 
+	.no-more-tables tr { border: 1px solid #ccc; }
+ 
+	.no-more-tables td { 
+		/* Behave  like a "row" */
+		border: none !important;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50% !important;  
+		white-space: normal;
+		text-align:left;
+	}
+ 
+	.no-more-tables td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+ 
+	/*
+	Label the data
+	*/
+	.no-more-tables td:before { content:  attr(data-title); }
+}

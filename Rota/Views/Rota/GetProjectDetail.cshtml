@@ -1,0 +1,55 @@
+﻿@using Rota.Models
+@model Rota.Models.Project
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="Scripts/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //$("#report tr:odd").addClass("odd");
+            $("#report tr:not(.odd)").hide();
+            $("#report tr:first-child").show();
+
+            $("#report tr.odd").click(function () {
+
+                $(this).nextUntil(".odd", "tr").toggle();
+                //$(this).next("tr").toggle();
+                $(this).find(".arrow").toggleClass("up");
+            });
+            //$("#report").jExpand();
+        });
+    </script>
+    <link href="Content/Site.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div>
+        <table class="footable" id="report">
+            <thead>
+                <tr class="odd">
+                    <th>Proje Adı</th>
+                    <th>Analiz Başlangıç Tarihi</th>
+                    <th>Geliştirme Başlangıç Tarihi</th>
+                    <th>Test Başlangıç Tarihi</th>
+                    <th>Canlıya Geçiş Tarihi</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Rota.Models.Project item in ViewBag.ProjectList)
+                {
+                    <tr class="odd" id="@item.ProjectId">
+                        <td>@item.ProjectName</td>
+                        <td>@item.AnalyseStartDate.ToShortDateString()</td>
+                        <td>@item.DevelopmentStartDate.ToShortDateString()</td>
+                        <td>@item.TestStartDate.ToShortDateString()</td>
+                        <td>@item.ProductionDate.ToShortDateString()</td>
+                        <td>
+                            <div class="arrow"></div>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</body>

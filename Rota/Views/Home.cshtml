@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Home</title>
+</head>
+<body>
+    <div>
+        @using Rota.mm
+        @foreach (Project item in ViewBag.ProjectList)
+        {
+            @item.ProjectName;
+        }
+    </div>
+</body>
+</html>
